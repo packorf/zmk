@@ -40,6 +40,36 @@
 };
 
 / {
+    behaviors {
+        soft_off: soft_off {
+            compatible = "zmk,behavior-soft-off";
+            #binding-cells = <0>;
+            status = "okay";
+        };
+    };
+
+    wakeup_source: wakeup_source {
+        compatible = "zmk,wakeup-trigger-key";
+        status = "okay";
+
+        trigger = <&soft_off>;
+        wakeup-source;
+    };
+
+    soft_off_wakers {
+        compatible = "zmk,soft-off-wakeup-sources";
+        status = "okay";
+
+        wakeup-sources = <&wakeup_source>;
+    };
+
+    soft_off_behavior_key {
+        compatible = "zmk,behavior-key";
+        status = "okay";
+        bindings = <&soft_off>;
+        key = <&soft_off>;
+    };
+
     chosen {
         zmk,underglow = &led_strip;
     };
